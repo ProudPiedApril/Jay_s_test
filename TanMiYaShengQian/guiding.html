@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封面页面</title>
+    <style>
+        body, html {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* 页面容器 */
+        .container {
+            display: flex;
+            position: relative;
+            width: 100vw;
+            height: 100vh; /* 高度为视口高度，确保填充整个屏幕 */
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #背景 {
+            position: absolute;
+            width: auto;
+            height: 100%;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: -1;
+        }
+
+        #引导页 {
+            position: absolute;
+            width: auto;
+            height: 100%;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: 1;
+            opacity: 0; /* 初始透明度为0 */
+            transition: opacity 1s; /* 透明度变化的过渡效果 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="背景" src="img/引导页/背景.png" alt="背景">
+        <img id="引导页" src="img/引导页/引导页.png" alt="引导">
+    </div>
+    <script>
+        const 引导页 = document.getElementById('引导页');
+        let fadeInProgress = true;
+
+        // 1秒后透明度变为100%
+        setTimeout(() => {
+            if (fadeInProgress) {
+                引导页.style.opacity = 1;
+            }
+        }, 1000);
+
+        // 点击事件处理
+        引导页.addEventListener('click', () => {
+            if (引导页.style.opacity !== "1") {
+                // 如果透明度不是100%，则立刻变为100%
+                引导页.style.opacity = 1;
+                fadeInProgress = false;
+            } else {
+                // 如果透明度已经是100%，则跳转到story1.html
+                window.location.href = 'story/story1.html';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封面页面</title>
+    <style>
+        body, html {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* 页面容器 */
+        .container {
+            display: flex;
+            position: relative;
+            max-width: 100%;
+            height: 100vh; /* 高度为视口高度，确保填充整个屏幕 */
+            text-align: center;
+            overflow: hidden;
+        }
+
+        
+        #封面 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: 12;
+        }
+
+        
+        #点击开始-容器 {
+            position: absolute;
+            width: 30%;
+            height: auto;
+            top: 80%;
+            left: 35%;
+            z-index: 12;
+        }
+
+        #点击开始-容器 a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #点击开始 {
+            width: 100%;
+            height: auto;
+            cursor: pointer; /* 手形光标 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="封面" src="img/封面/封面.png" alt="封面">
+
+        
+        <div id="点击开始-容器">
+            <a href="guiding.html">
+                <img id="点击开始" src="img/封面/点击开始.png" alt="点击开始">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 
+    </script>
+</body>
+</html>

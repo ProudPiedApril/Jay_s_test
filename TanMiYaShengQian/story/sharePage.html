@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封面页面</title>
+    <style>
+        body, html {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* 页面容器 */
+        .container {
+            display: flex;
+            position: relative;
+            width: 100vw;
+            height: 100vh; /* 高度为视口高度，确保填充整个屏幕 */
+            text-align: center;
+            overflow: hidden;
+        }
+
+
+
+        #sharePage {
+            position: absolute;
+            width: auto;
+            height: 100%;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: 1;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="sharePage" src="../img/分享页.png" alt="sharePage">
+        
+    </div>
+
+</body>
+</html>

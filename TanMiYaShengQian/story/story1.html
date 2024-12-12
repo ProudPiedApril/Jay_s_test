@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封面页面</title>
+    <style>
+        body, html {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* 页面容器 */
+        .container {
+            display: flex;
+            position: relative;
+			height: 100vh; /* 高度为视口高度，确保填充整个屏幕 */
+            width: 100vw;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #山背景 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: -1;
+        }
+		#房子小孩 {
+		    position: absolute;
+		    width: 100%;
+		    height: auto;
+		    top: 30%;
+		    left: 50%;
+		    transform: translate(-50%, 0);
+		    z-index: 0;
+		}
+		#祟{
+			position: absolute;
+			width: 100%;
+			height: auto;
+			top: -10%;
+			left: 50%;
+			transform: translate(-50%, 0);
+			z-index: -1;
+			opacity: 0; /* 初始透明度为0 */
+			transition: opacity 1s, top 1s; /* 透明度变化的过渡效果 */
+		}
+
+		#问答文字{
+			position: absolute;
+			width: 100%;
+			height: auto;
+			top: 80%;
+			left: 50%;
+			transform: translate(-50%, 0);
+			z-index: 3;
+			opacity:0;
+			transition: opacity 1s;
+			
+		}
+		
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="山背景" src="img/11/传说页面1/传说页面1山背景.png" alt="山背景">
+		<img id="房子小孩" src="img/11/传说页面1/传说页面1房子小孩.png" alt="房子小孩">
+		<img id="祟" src="img/11/传说页面1/传说页面1祟.png" alt="祟">
+		<img id="问答文字" src="img/11/传说页面1/传说页面1问答文字.png" alt="问答文字">
+
+    </div>
+    <script>
+        const 祟 = document.getElementById('祟');
+        const 问答文字 = document.getElementById('问答文字');
+     
+        // 设置一个标志来表示祟的过渡
+        let 祟过渡中 = true;
+     
+        // 为祟设置过渡完成后的处理
+        祟.addEventListener('transitionend', () => {
+            // 当祟的过渡完成时，设置标志为false，并触发问答文字的变化
+            祟过渡中 = false;
+            开始问答文字变化();
+        });
+     
+        // 定义一个函数来开始问答文字的变化
+        function 开始问答文字变化() {
+            if (!祟过渡中) {
+                问答文字.style.opacity = 1; 
+                
+            }
+        }
+		function 开始问答文字变化() {
+		            if (!祟过渡中) {
+		                问答文字.style.opacity = 1;
+		                // 添加点击事件监听器到整个文档
+		                document.addEventListener('click', 跳转到Story2);
+		            }
+		        }
+     
+        // 1秒后触发祟的变化
+        setTimeout(() => {
+            祟.style.opacity = 1;
+            祟.style.top = '0';
+        }, 1000);
+		function 跳转到Story2() {
+		            window.location.href = 'story2.html';
+		        }
+		
+
+    </script>
+</body>
+</html>

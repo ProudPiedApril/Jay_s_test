@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红包小互动</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* 页面容器 */
+        .container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background: url('img/11/红包小互动/图层 11.png') no-repeat center/cover;
+            overflow: hidden;
+        }
+
+        /* 第二背景叠加 */
+        .background-overlay {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            left: 5%;
+            background: url('img/11/红包小互动/背景币.png') no-repeat center/contain;
+            z-index: 1;
+        }
+
+        /* 可拖动图片元素1 */
+        .draggable {
+            position: absolute;
+            width: 50%;
+            aspect-ratio: 1/1;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            background: url('img/11/红包小互动/页面1/钱币.png') no-repeat center/contain;
+            z-index: 3;
+        }
+
+        /* 图片元素2 */
+        .target {
+            position: absolute;
+            width: 80%;
+            aspect-ratio: 1/1;
+            right: 5%;
+            top: 10%;
+            background: url('img/11/红包小互动/页面1/红布.png') no-repeat center/contain;
+            z-index: 2;
+        }
+
+        /* 窗口图片元素3 */
+        .window {
+            position: absolute;
+            width: 90%;
+            height: 15vh;
+            bottom: 5%;
+            left: 5%;
+            background: url('img/11/红包小互动/页面1/压胜钱的来源.png') no-repeat center/contain;
+            z-index: 2;
+        }
+
+        /* 弹出图片元素4 */
+        .popup {
+            position: absolute;
+            width: 45%;
+            aspect-ratio: 1/1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: url('img/11/红包小互动/页面2/红包.png') no-repeat center/contain;
+            display: none;
+            z-index: 4;
+        }
+
+        /* 隐藏元素 */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="background-overlay"></div>
+        <div class="draggable" id="element1"></div>
+        <div class="target" id="element2"></div>
+        <div class="window" id="element3"></div>
+        <div class="popup" id="红布包"></div>
+    </div>
+
+    <script>
+            const element1 = document.getElementById('element1');
+            const element2 = document.getElementById('element2');
+            const element3 = document.getElementById('element3');
+            const element4 = document.getElementById('红布包');
+         
+            let offsetX = 0, offsetY = 0;
+            let isDragging = false;
+            let contactStartTime = 0;
+            let isContacting = false;
+         
+            const startDrag = (e) => {
+                e.preventDefault();
+                isDragging = true;
+         
+                const touch = e.touches ? e.touches[0] : e;
+                offsetX = touch.clientX - element1.getBoundingClientRect().left;
+                offsetY = touch.clientY - element1.getBoundingClientRect().top;
+         
+                element1.style.cursor = 'grabbing';
+            };
+         
+            const duringDrag = (e) => {
+                if (!isDragging) return;
+         
+                const touch = e.touches ? e.touches[0] : e;
+                const x = touch.clientX - offsetX;
+                const y = touch.clientY - offsetY;
+         
+                element1.style.left = `${x}px`;
+                element1.style.top = `${y}px`;
+         
+                const rect1 = element1.getBoundingClientRect();
+                const rect2 = element2.getBoundingClientRect();
+         
+                if (
+                    rect1.left < rect2.right &&
+                    rect1.right > rect2.left &&
+                    rect1.top < rect2.bottom &&
+                    rect1.bottom > rect2.top
+                ) {
+                    if (!isContacting) {
+                        contactStartTime = Date.now();
+                        isContacting = true;
+                    }
+         
+                    if (Date.now() - contactStartTime > 1000) {
+                        element1.classList.add('hidden');
+                        element2.classList.add('hidden');
+                        element3.classList.add('hidden');
+                        element4.style.display = "block";
+     
+                        // 设置定时器，2秒后跳转到story4.html
+                        setTimeout(() => {
+                            window.location.href = 'sharePage.html';
+                        }, 2000);
+     
+                        isDragging = false;
+                        isContacting = false;
+                        element1.style.cursor = 'grab';
+                    }
+                } else {
+                    isContacting = false;
+                }
+            };
+         
+            const stopDrag = () => {
+                isDragging = false;
+                element1.style.cursor = 'grab';
+                isContacting = false;
+            };
+    		
+            element1.addEventListener('mousedown', startDrag);
+            element1.addEventListener('touchstart', startDrag);
+         
+            document.addEventListener('mousemove', duringDrag);
+            document.addEventListener('touchmove', duringDrag);
+         
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchend', stopDrag);
+        </script>
+</body>
+</html>

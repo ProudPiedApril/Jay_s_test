@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=640, initial-scale=1.0">
+    <title>传说故事</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/小互动 背景.png'); /* 背景图 */
+            background-size: 640px 1008px; /* 确保背景图自适应 */
+            background-position: center; /* 背景图居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* 防止背景溢出 */
+        }
+
+        /* 可拖动的图片 */
+        .draggable {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.2s ease; /* 平滑过渡 */
+        }
+
+        /* 红帕子：右上角，大一些 */
+        .red-scarf {
+            width: 40vw; /* 增大红帕子的大小 */
+            right: 5vw; /* 放置在右上角 */
+            top: 5vh; /* 放置在上方 */
+            pointer-events: none; /* 禁止拖动 */
+        }
+
+        /* 压胜钱：左下角，可拖动 */
+        .lucky-money {
+            width: 30vw; /* 增大压胜钱的大小 */
+            left: 5vw; /* 放置在左下角 */
+            bottom: 5vh; /* 放置在底部 */
+        }
+
+        /* 完成图片，默认隐藏 */
+        .completed {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw; /* 增大完成图片的宽度 */
+            height: auto; /* 高度根据宽度自动调整，保持比例 */
+            display: none; /* 初始时隐藏 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 背景图 -->
+        <img src="img/小互动 背景.png" alt="背景图" class="background">
+
+        <!-- 红帕子：右上角 -->
+        <img src="img/小互动 红帕子.png" alt="红帕子" class="draggable red-scarf">
+
+        <!-- 压胜钱：左下角 -->
+        <img src="img/小互动 压胜钱.png" alt="压胜钱" class="draggable lucky-money">
+
+        <!-- 完成图片：初始状态隐藏 -->
+        <img src="img/小互动 完成.png" alt="完成图片" class="completed" id="completedImg">
+    </div>
+
+    <script>
+        const draggableElements = document.querySelectorAll('.draggable');
+        const completedImg = document.getElementById('completedImg');
+        const redScarf = document.querySelector('.red-scarf');
+        const luckyMoney = document.querySelector('.lucky-money');
+
+        draggableElements.forEach(element => {
+            if (element.classList.contains('lucky-money')) {
+
+                let startX, startY, offsetX, offsetY;
+
+                // 检查两个元素是否碰撞
+                const isCollision = () => {
+                    const luckyMoneyRect = luckyMoney.getBoundingClientRect();
+                    const redScarfRect = redScarf.getBoundingClientRect();
+
+                    // 判断两个矩形是否重叠
+                    return !(luckyMoneyRect.right < redScarfRect.left || 
+                             luckyMoneyRect.left > redScarfRect.right || 
+                             luckyMoneyRect.bottom < redScarfRect.top || 
+                             luckyMoneyRect.top > redScarfRect.bottom);
+                };
+
+                const onMouseDown = (e) => {
+                    e.preventDefault();
+                    startX = e.clientX || e.touches[0].clientX;
+                    startY = e.clientY || e.touches[0].clientY;
+                    offsetX = startX - element.getBoundingClientRect().left;
+                    offsetY = startY - element.getBoundingClientRect().top;
+
+                    const onMove = (moveEvent) => {
+                        const moveX = moveEvent.clientX || moveEvent.touches[0].clientX;
+                        const moveY = moveEvent.clientY || moveEvent.touches[0].clientY;
+                        element.style.left = `${moveX - offsetX}px`;
+                        element.style.top = `${moveY - offsetY}px`;
+
+                        // 检测碰撞
+                        if (isCollision()) {
+                            completedImg.style.display = 'block'; // 显示完成图片
+                        }
+                    };
+
+                    const onUp = () => {
+                        document.removeEventListener('mousemove', onMove);
+                        document.removeEventListener('mouseup', onUp);
+                        document.removeEventListener('touchmove', onMove);
+                        document.removeEventListener('touchend', onUp);
+                    };
+
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onUp);
+                    document.addEventListener('touchmove', onMove);
+                    document.addEventListener('touchend', onUp);
+                };
+
+                element.addEventListener('mousedown', onMouseDown);
+                element.addEventListener('touchstart', onMouseDown);
+            }
+        });
+    </script>
+
+</body>
+</html>

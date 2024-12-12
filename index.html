@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封面页面</title>
+    <style>
+        body, html {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            height: 100%;
+            width: 100%;
+        }
+ 
+        /* 页面容器 */
+        .container {
+            display: flex;
+            position: relative;
+            width: 100vw;
+            height: 100vh; /* 高度为视口高度，确保填充整个屏幕 */
+            text-align: center;
+            overflow: hidden;
+        }
+ 
+        #封面 {
+            position: absolute;
+            width: auto;
+            height: 100%;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: 12;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="封面" src="TanMiYaShengQian/img/加载页（暂用）.png" alt="加载页">
+    </div>
+ 
+    <script>
+        // 使用 window.onload 确保所有内容（包括图片）都加载完成后执行
+        window.onload = function() {
+            // 页面加载完成后执行的代码
+            console.log("页面加载完成");
+ 
+            // 设置一个两秒的延时，之后跳转到coverage.html
+            setTimeout(function() {
+                window.location.href = "TanMiYaShengQian/coverage.html";
+            }, 2000); // 2000毫秒等于2秒
+        };
+    </script>
+</body>
+</html>
